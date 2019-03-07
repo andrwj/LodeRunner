@@ -2,8 +2,8 @@
 
 #include "Arduboy2Ext.h"
 #include "Enums.h"
-#include "../characters/Player.h"
-#include "../characters/Enemy.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 /* ----------------------------------------------------------------------------

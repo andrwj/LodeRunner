@@ -1,6 +1,6 @@
-#include "src/utils/Arduboy2Ext.h"
+#include "Arduboy2Ext.h"
 #include <ArduboyTones.h>
-#include "src/images/sounds.h"
+#include "sounds.h"
 
 
 // ------------------------------------------------------------------------------------------

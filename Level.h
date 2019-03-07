@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../utils/Arduboy2Ext.h"
-#include "../utils/Utils.h"
-#include "../utils/Enums.h"
-#include "../characters/Player.h"
-#include "../characters/Enemy.h"
+#include "Arduboy2Ext.h"
+#include "Utils.h"
+#include "Enums.h"
+#include "Player.h"
+#include "Enemy.h"
 
 #define ENCRYPTION_TYPE_RLE_ROW 0
 #define ENCRYPTION_TYPE_RLE_COL 1

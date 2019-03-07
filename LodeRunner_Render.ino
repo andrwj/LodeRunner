@@ -1,5 +1,5 @@
-#include "src/utils/Arduboy2Ext.h"
-#include "src/utils/Utils.h"
+#include "Arduboy2Ext.h"
+#include "Utils.h"
 #include <ArduboyTones.h>
 
 

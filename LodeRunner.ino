@@ -1,16 +1,16 @@
-#include "src/utils/Arduboy2Ext.h"
+#include "Arduboy2Ext.h"
 #include <ArduboyTones.h>
-#include "src/images/sounds.h"
+#include "sounds.h"
 
-#include "src/utils/Utils.h"
-#include "src/utils/Enums.h"
-#include "src/images/Images.h"
-#include "src/levels/Levels.h"
-#include "src/levels/Level.h"
-#include "src/utils/Queue.h"
-#include "src/utils/EEPROM_Utils.h"
-#include "src/characters/Player.h"
-#include "src/characters/Enemy.h"
+#include "Utils.h"
+#include "Enums.h"
+#include "Images.h"
+#include "Levels.h"
+#include "Level.h"
+#include "Queue.h"
+#include "EEPROM_Utils.h"
+#include "Player.h"
+#include "Enemy.h"
 
 Arduboy2Ext arduboy;
 ArduboyTones sound(arduboy.audio.enabled);
@@ -70,10 +70,10 @@ void setup() {
   player.setNextState(GameState::Intro);
   #else
   player.setNextState(GameState::GameSelect);
-  #endif 
+  #endif
 
   uint8_t gameNumber = EEPROM_Utils::getGameNumber();
-  
+
   if (gameNumber < GAME_NUMBER) {
 
     if (gameNumber == 1) { gameState = GameState::CompleteGame1; }
@@ -81,7 +81,7 @@ void setup() {
     if (gameNumber == 3) { gameState = GameState::CompleteGame3; }
 
   }
-  
+
   if (gameNumber > GAME_NUMBER) {
 
     #if GAME_NUMBER == 4
@@ -134,7 +134,7 @@ void loop() {
       sound.noTone();
       while (!holes.isEmpty()) holes.dequeue();
 //      level.setLevelNumber(36);
-      level.loadLevel(&player, enemies); 
+      level.loadLevel(&player, enemies);
       introRect = 28;
       gameState = GameState::LevelEntryAnimation;
       /* break; Drop through to next case */
@@ -178,7 +178,7 @@ void loop() {
     default: break;
 
   }
-  
+
   arduboy.display(CLEAR_BUFFER);
 
 }
@@ -228,7 +228,7 @@ void GameSelect() {
   // Brick borders ..
 
   for (uint8_t x = 0; x < WIDTH; x = x + 10) {
-  
+
     Sprites::drawOverwrite(x, 0, levelElementImgs, 1);
     Sprites::drawOverwrite(x, 55, levelElementImgs, 1);
 
@@ -236,7 +236,7 @@ void GameSelect() {
 
 
   // Handle buttons ..
-  
+
   uint8_t buttons = arduboy.justPressedButtons();
 
   if (!firstTime) {
@@ -247,17 +247,17 @@ void GameSelect() {
   }
 
   if (buttons & A_BUTTON) {
-    
+
     if (menuSelect == 0) { EEPROM_Utils::getSavedGameData(&level, &player); gameState = GameState::LevelInit; }
     if (menuSelect == 1) { EEPROM_Utils::initEEPROM(true); EEPROM_Utils::getSavedGameData(&level, &player); gameState = GameState::LevelInit; }
-     
+
   }
 
 }
 
 
 // --------------------------------------------------------------------------------------
-//  Play the current level ..  
+//  Play the current level ..
 //
 //  If 'play' is false, play is halted and the player flashes waiting on a keypress.
 //
@@ -317,7 +317,7 @@ void LevelPlay() {
         player.setStance(getNextStance(player.getStance()));
 
       }
-    
+
     }
     if (arduboy.everyXFrames(4)) {
 
@@ -334,12 +334,12 @@ void LevelPlay() {
           switch (stance) {
 
             case PlayerStance::Rebirth_1 ... PlayerStance::Rebirth_3:
-              
+
               enemy->setStance(getNextStance(stance));
               break;
 
             default:
-              
+
               if (enemy->getXDelta() != 0 || enemy->getYDelta() != 0) {
 
                 enemy->setStance(getNextStance(stance));
@@ -398,9 +398,9 @@ void LevelPlay() {
         player.setNextState(GameState::NextLevel);
       }
 
-      sound.tones(levelComplete); 
+      sound.tones(levelComplete);
 
-    } 
+    }
 
 
     // Move enemies ..
@@ -431,13 +431,13 @@ void LevelPlay() {
 
 
       // Update level details ..
-      
+
       for (uint8_t y = 0; y < level.getHeight(); y++) {
 
         for (uint8_t x = 0; x < level.getWidth() * 2; x++) {
 
           LevelElement element = (LevelElement)level.getLevelData(x, y);
-          
+
           switch (element) {
 
             case LevelElement::Brick_1 ... LevelElement::Brick_4:
@@ -471,7 +471,7 @@ void LevelPlay() {
 
           switch (hole.countDown) {
 
-            case HOLE_FILL_4:        
+            case HOLE_FILL_4:
               level.setLevelData(hole.x, hole.y, LevelElement::Brick_Close_1);
               break;
 
@@ -534,7 +534,7 @@ void LevelPlay() {
       // Burn any holes that have been filled in from the queue ..
 
       while (true) {
-        
+
         Hole &hole = holes.peek();
 
         if (hole.countDown == 1) {
@@ -567,13 +567,13 @@ void LevelPlay() {
     if (gameState == GameState::LevelFlash) {
 
       if (pressed & B_BUTTON) {
-  
+
         //if (arduboy.everyXFrames(2)) {
 
           switch (levelCount) {
 
             case 0 ... 40:
-            
+
               levelCount++;
               break;
 
@@ -588,7 +588,7 @@ void LevelPlay() {
               arduboy.setRGBled(0,0,0);
               levelCount++;
               break;
-                    
+
             default:
 
               uint8_t levelNumber = level.getLevelNumber();
@@ -649,7 +649,7 @@ void LevelPlay() {
 
     // We are not playing so wait for a key press to continue the game ..
 
-    if (justPressed > 0) { 
+    if (justPressed > 0) {
 
       switch (gameState) {
 
@@ -658,14 +658,14 @@ void LevelPlay() {
 
         case GameState::NextLevel:
         case GameState::RestartLevel:
-          gameState = GameState::LevelInit;  
+          gameState = GameState::LevelInit;
           break;
 
         case GameState::GameOver:
           #if GAME_NUMBER == 1
-          gameState = GameState::Intro;  
+          gameState = GameState::Intro;
           #else
-          gameState = GameState::GameSelect;  
+          gameState = GameState::GameSelect;
           #endif
           break;
 
@@ -678,8 +678,8 @@ void LevelPlay() {
           gameState = GameState::LevelPlay;
           break;
 
-      }  
-      
+      }
+
     }
 
   }
@@ -717,7 +717,7 @@ void playerDies() {
 
   }
 
-  sound.tones(dead); 
+  sound.tones(dead);
 
 }
 

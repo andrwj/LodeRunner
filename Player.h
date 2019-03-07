@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../utils/Arduboy2Ext.h"
-#include "../utils/Utils.h"
-#include "../utils/Enums.h"
+#include "Arduboy2Ext.h"
+#include "Utils.h"
+#include "Enums.h"
 
 class Player {
 
