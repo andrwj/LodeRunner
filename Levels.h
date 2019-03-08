@@ -4,7 +4,7 @@
 #include "Utils.h"
 #include "Enums.h"
 
-#define GAME_NUMBER          7
+#define GAME_NUMBER          1
 #define NUMBER_OF_GAMES      7
 
 #if GAME_NUMBER == 1
