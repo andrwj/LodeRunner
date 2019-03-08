@@ -25,7 +25,6 @@ GameState gameState = GameState::Intro;
 GameState gameState = GameState::GameSelect;
 #endif
 int8_t bannerStripe = -30;
-int8_t introRect = 0;
 Queue<Hole, 20> holes;
 
 uint8_t suicide = 0;
@@ -92,9 +91,6 @@ void loop()
   {
 #if GAME_NUMBER == 1
   case GameState::Intro:
-    // this is annoying, so turned off
-    // if (!sound.playing())
-    //   sound.tones(score);
     Intro();
     break;
 
@@ -105,8 +101,6 @@ void loop()
 #else
 
   case GameState::GameSelect:
-    if (!sound.playing())
-      sound.tones(score);
     GameSelect();
     break;
 
@@ -116,9 +110,8 @@ void loop()
     sound.noTone();
     while (!holes.isEmpty())
       holes.dequeue();
-    //      level.setLevelNumber(36);
+    //level.setLevelNumber(36);
     level.loadLevel(&player, enemies);
-    introRect = 28;
     gameState = GameState::LevelEntryAnimation;
     /* break; Drop through to next case */
 
@@ -129,7 +122,6 @@ void loop()
     break;
 
   case GameState::LevelExitInit:
-    introRect = 0;
     gameState = GameState::LevelExitAnimation;
     /* break; Drop through to next case */
 
@@ -168,10 +160,14 @@ void loop()
 //  Display intro banner ..
 void Intro()
 {
-  // To reduce hex file size
-  // arduboy.drawCompressedMirror(0, 4, banner, WHITE, false);
-  if (arduboy.justPressedButtons() & A_BUTTON)
-  {
+  arduboy.drawCompressedMirror(0, 4, banner, WHITE, false);
+
+  uint8_t key_pressed = arduboy.justPressedButtons();
+  if (key_pressed & A_BUTTON) {
+    arduboy.audio.on();
+    gameState = GameState::GameSelect;
+  } else if (key_pressed & B_BUTTON) {
+    arduboy.audio.off();
     gameState = GameState::GameSelect;
   }
 }
@@ -399,7 +395,6 @@ void LevelPlay()
     }
 
     // Do any holes need to be filled in ?
-
     if (!holes.isEmpty())
     {
       for (uint8_t x = 0; x < holes.getCount(); x++)
