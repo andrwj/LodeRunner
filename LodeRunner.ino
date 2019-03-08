@@ -628,7 +628,7 @@ void NextGame()
 void CompleteGame()
 {
   uint8_t level = static_cast<uint8_t>(gameState) - static_cast<uint8_t>(GameState::CompleteGame1) + 1;
-  const uint8_t *completing[] = {NULL, completeGame1, completeGame2, completeGame3};
+  const uint8_t *completing[] = {nullptr, completeGame1, completeGame2, completeGame3};
 
   arduboy.drawCompressedMirror(19, 20, completeGame, WHITE, false);
   arduboy.drawCompressedMirror(71, 35, completing[level], WHITE, false);
