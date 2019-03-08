@@ -24,7 +24,6 @@ GameState gameState = GameState::Intro;
 #else
 GameState gameState = GameState::GameSelect;
 #endif
-int8_t bannerStripe = -30;
 Queue<Hole, 20> holes;
 
 uint8_t suicide = 0;
@@ -631,18 +630,12 @@ void NextGame()
 //  Display 'complete game' banner ..
 void CompleteGame()
 {
-  uint8_t level = static_cast<uint8_t>(gameState) - static_cast<uint8_t>(GameState::CompleteGame1) + 1;
-  const uint8_t *completing[] = {nullptr, completeGame1, completeGame2, completeGame3};
+  // uint8_t level = static_cast<uint8_t>(gameState) - static_cast<uint8_t>(GameState::CompleteGame1) + 1;
+  // const uint8_t *completing[] = {nullptr, completeGame1, completeGame2, completeGame3, completeGame4, completeGame5, completeGame6};
 
   arduboy.drawCompressedMirror(19, 20, completeGame, WHITE, false);
-  arduboy.drawCompressedMirror(71, 35, completing[level], WHITE, false);
+  // arduboy.drawCompressedMirror(71, 35, completeGame1, WHITE, false);
 
-  // if (level == 1)
-  //   arduboy.drawCompressedMirror(71, 35, completeGame1, WHITE, false);
-  // if (level == 2)
-  //   arduboy.drawCompressedMirror(71, 35, completeGame2, WHITE, false);
-  // if (level == 3)
-  //   arduboy.drawCompressedMirror(71, 35, completeGame3, WHITE, false);
   //arduboy.display(CLEAR_BUFFER);
 }
 
