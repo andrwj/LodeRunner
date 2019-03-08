@@ -3,7 +3,13 @@
         {
             "name": "Mac",
             "includePath": [
-                "/Users/andrwj/Develops/Arduino/IDE/Arduino-v1.8.8.app/Contents/Java/hardware/arduino/avr/cores/arduino"
+                "/Users/andrwj/Develops/Arduino/IDE/Arduino-v1.8.8.app/Contents/Java/hardware/arduino/avr/cores/arduino",
+                "/Users/andrwj/Develops/Arduino/IDE/Arduino-v1.8.8.app/Contents/Java/hardware/arduino/avr/variants/leonardo",
+                "/Users/andrwj/Library/Arduino15/packages/arduino/tools/avr-gcc/4.8.1-arduino5/avr/include",
+                "/Users/andrwj/Develops/Arduino/sketchbooks/libraries/Arduboy2/src",
+                "/Users/andrwj/Develops/Arduino/IDE/Arduino-v1.8.8.app/Contents/Java/hardware/arduino/avr/libraries/EEPROM/src",
+                "/Users/andrwj/Develops/Arduino/sketchbooks/libraries/ArduboyTones/src",
+                "/Users/andrwj/Develops/Arduino/sketchbooks/LodeRunner"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,

@@ -62,7 +62,11 @@ void setup()
   GameState initialStates[] = {GameState::Intro,
                                /*gameNumber == 1*/ GameState::CompleteGame1,
                                /*gameNumber == 2*/ GameState::CompleteGame2,
-                               /*gameNumber == 3*/ GameState::CompleteGame3};
+                               /*gameNumber == 3*/ GameState::CompleteGame3,
+                               /*gameNumber == 4*/ GameState::CompleteGame4,
+                               /*gameNumber == 5*/ GameState::CompleteGame5,
+                               /*gameNumber == 6*/ GameState::CompleteGame6
+                               };
   uint8_t gameNumber = EEPROM_Utils::getGameNumber();
 
   if (gameNumber < GAME_NUMBER)
@@ -70,7 +74,7 @@ void setup()
 
   if (gameNumber > GAME_NUMBER)
   {
-#if GAME_NUMBER == 4
+#if GAME_NUMBER == 7
     gameState = (gameNumber == NUMBER_OF_GAMES) ? gameState = GameState::SeriesOver : gameState = GameState::NextGame;
 #else
     gameState = GameState::NextGame;
@@ -140,7 +144,7 @@ void loop()
     CompleteGame();
     break;
 
-#if GAME_NUMBER == 4
+#if GAME_NUMBER == 7
   case GameState::SeriesOver:
     CompleteSeries();
     break;
@@ -645,7 +649,7 @@ void CompleteGame()
 // --------------------------------------------------------------------------------------
 //  Display 'victory' banner ..
 //
-#if GAME_NUMBER == 4
+#if GAME_NUMBER == 7
 void CompleteSeries()
 {
   arduboy.drawCompressedMirror(29, 24, victory, WHITE, false);

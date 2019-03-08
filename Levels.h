@@ -4,24 +4,36 @@
 #include "Utils.h"
 #include "Enums.h"
 
-#define GAME_NUMBER 1
-#define NUMBER_OF_GAMES 4
+#define GAME_NUMBER          7
+#define NUMBER_OF_GAMES      7
 
 #if GAME_NUMBER == 1
-  #define LEVEL_COUNT         40
+  #define LEVEL_COUNT         25
   #define LEVEL_OFFSET        0
 #endif
 #if GAME_NUMBER == 2
-  #define LEVEL_COUNT         40
-  #define LEVEL_OFFSET        40
+  #define LEVEL_COUNT         25
+  #define LEVEL_OFFSET        25 
 #endif
 #if GAME_NUMBER == 3
-  #define LEVEL_COUNT         40
-  #define LEVEL_OFFSET        80
+  #define LEVEL_COUNT         25
+  #define LEVEL_OFFSET        50
 #endif
 #if GAME_NUMBER == 4
-  #define LEVEL_COUNT         35
-  #define LEVEL_OFFSET        120
+  #define LEVEL_COUNT         25
+  #define LEVEL_OFFSET        75
+#endif
+#if GAME_NUMBER == 5
+  #define LEVEL_COUNT         25
+  #define LEVEL_OFFSET        100
+#endif
+#if GAME_NUMBER == 6
+  #define LEVEL_COUNT         25
+  #define LEVEL_OFFSET        125
+#endif
+#if GAME_NUMBER == 7
+  #define LEVEL_COUNT         5
+  #define LEVEL_OFFSET        150
 #endif
 
 
@@ -644,35 +656,51 @@ const uint8_t PROGMEM level153[] = {
 const uint8_t PROGMEM level154[] = {
 0x07, 0x0E, 0x04, 0x02, 0x01, 0x19, 0x01, 0x1A, 0x0E, 0x01, 0x0E, 0x02, 0x00, 0x00, 0x1B, 0x00, 0x03, 0x01, 0x02, 0x0E, 0x19, 0x0E, 0x18, 0x01, 0x00, 0xE1, 0x8C, 0x42, 0x8C, 0xE1, 0x61, 0x1A, 0x62, 0x01, 0x41, 0x21, 0x02, 0x41, 0x21, 0x03, 0x22, 0x03, 0x26, 0x02, 0x41, 0x21, 0x01, 0x62, 0x01, 0x21, 0x41, 0x02, 0x21, 0x41, 0x02, 0x24, 0x02, 0x26, 0x02, 0x21, 0x41, 0x01, 0x62, 0x01, 0x41, 0x21, 0x02, 0x41, 0x21, 0x01, 0x41, 0x21, 0x02, 0x21, 0x41, 0x04, 0xC1, 0x22, 0x02, 0x41, 0x21, 0x01, 0x62, 0x01, 0x21, 0x41, 0xC2, 0x21, 0x41, 0x01, 0x21, 0x41, 0xC2, 0x41, 0x21, 0x03, 0xC1, 0x22, 0x03, 0x21, 0x41, 0x01, 0x62, 0x01, 0x41, 0x22, 0xA1, 0x41, 0x21, 0x01, 0x41, 0x22, 0xA1, 0x21, 0x41, 0x02, 0xC1, 0x22, 0x04, 0x41, 0x21, 0x01, 0x62, 0x01, 0x21, 0x41, 0x21, 0xA1, 0x21, 0x41, 0x01, 0x21, 0x41, 0x21, 0xA1, 0x41, 0x21, 0x01, 0xC1, 0x22, 0x05, 0x21, 0x41, 0x01, 0x62, 0x01, 0x41, 0x21, 0xC2, 0x41, 0x21, 0x01, 0x41, 0x21, 0xC2, 0x21, 0x41, 0x01, 0x22, 0x06, 0x41, 0x21, 0x01, 0x62, 0x01, 0x21, 0x41, 0x02, 0x21, 0x41, 0x01, 0x21, 0x41, 0x02, 0x41, 0x21, 0x01, 0x22, 0xC4, 0x05, 0x62, 0x01, 0x41, 0x21, 0x02, 0x41, 0x21, 0x01, 0x41, 0x21, 0x02, 0x21, 0x41, 0x01, 0x26, 0x02, 0x41, 0x21, 0x01, 0x62, 0x01, 0x21, 0x41, 0x02, 0x21, 0x41, 0x01, 0x21, 0x41, 0x02, 0x41, 0x21, 0x01, 0x26, 0x02, 0x21, 0x41, 0x01, 0x62, 0x1A, 0x62, 0x06, 0x86, 0x02, 0x87, 0x05, 0x62, 0x0C, 0x22, 0x0C, 0x61, 0x3C, 0x00
 };
-
 #if GAME_NUMBER == 1
 const uint8_t *levels[] =    { nullptr, 
-                               level0, level1, level2, level3, level4, level5, level6, level7, level8, level9, 
-                               level10, level11, level12, level13, level14, level15, level16, level17, level18, level19, 
-                               level20, level21, level22, level23, level24, level25, level26, level27, level28, level29, 
-                               level30, level31, level32, level33, level34, level35, level36, level37, level38, level39, 
+                               level0, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, 
+                               level11, level12, level13, level14, level15, level16, level17, level18, level19, level20, 
+                               level21, level22, level23, level24, 
                                };
 #endif
 #if GAME_NUMBER == 2
 const uint8_t *levels[] =    { nullptr, 
-                               level40, level41, level42, level43, level44, level45, level46, level47, level48, level49, 
-                               level50, level51, level52, level53, level54, level55, level56, level57, level58, level59, 
-                               level60, level61, level62, level63, level64, level65, level66, level67, level68, level69, 
-                               level70, level71, level72, level73, level74, level75, level76, level77, level78, level79, 
+                               level25, level26, level27, level28, level29, level30, level31, level32, level33, level34, 
+                               level35, level36, level37, level38, level39, level40, level41, level42, level43, level44, 
+                               level45, level46, level47, level48, level49, 
                                };
 #endif
 #if GAME_NUMBER == 3
 const uint8_t *levels[] =    { nullptr, 
-                               level80, level81, level82, level83, level84, level85, level86, level87, level88, level89, 
-                               level90, level91, level92, level93, level94, level95, level96, level97, level98, level99, 
-                               level100, level101, level102, level103, level104, level105, level106, level107, level108, level109, 
-                               level110, level111, level112, level113, level114, level115, level116, level117, level118, level119, 
+                               level50, level51, level52, level53, level54, level55, level56, level57, level58, level59, 
+                               level60, level61, level62, level63, level64, level65, level66, level67, level68, level69, 
+                               level70, level71, level72, level73, level74, 
                                };
 #endif
 #if GAME_NUMBER == 4
 const uint8_t *levels[] =    { nullptr, 
-                               level120, level121, level122, level123, level124, level125, level126, level127, level128, level129, 
-                               level130, level131, level132, level133, level134, level135, level136, level137, level138, level139, 
-                               level140, level141, level142, level143, level144, level145, level146, level147, level148, level149, 
-                               level150, level151, level152, level153, level154, };
+                               level75, level76, level77, level78, level79, level80, level81, level82, level83, level84, 
+                               level85, level86, level87, level88, level89, level90, level91, level92, level93, level94, 
+                               level95, level96, level97, level98, level99, 
+                               };
+#endif
+
+#if GAME_NUMBER == 5
+const uint8_t *levels[] =    { nullptr, 
+                               level100, level101, level102, level103, level104, level105, level106, level107, level108, 
+                               level109, level110, level111, level112, level113, level114, level115, level116, level117, 
+                               level118, level119, level120, level121, level122, level123, level124,
+                               };
+#endif
+#if GAME_NUMBER == 6
+const uint8_t *levels[] =    { nullptr, 
+                               level125, level126, level127, level128, level129, level130, level131, level132, level133, 
+                               level134, level135, level136, level137, level138, level139, level140, level141, level142, 
+                               level143, level144, level145, level146, level147, level148, level149, 
+                               };
+#endif
+#if GAME_NUMBER == 7
+const uint8_t *levels[] =    { nullptr, 
+                               level150, level151, level152, level153, level154, 
+                               };
 #endif

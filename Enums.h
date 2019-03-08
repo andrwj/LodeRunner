@@ -56,7 +56,10 @@ enum class GameState : uint8_t
   CompleteGame1, //11
   CompleteGame2, //12
   CompleteGame3, //13
-  NextGame,      //14
+  CompleteGame4, //14
+  CompleteGame5, //15
+  CompleteGame6, //16
+  NextGame,      //17
   SeriesOver
 };
 
