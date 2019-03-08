@@ -1,35 +1,31 @@
 #include "Arduboy2Ext.h"
 
-Arduboy2Ext::Arduboy2Ext() : Arduboy2Base() { }
+Arduboy2Ext::Arduboy2Ext() : Arduboy2Base() {}
 
-uint8_t Arduboy2Ext::justPressedButtons() const {
-
+uint8_t Arduboy2Ext::justPressedButtons() const
+{
   return (~previousButtonState & currentButtonState);
-
 }
 
-uint8_t Arduboy2Ext::pressedButtons() const {
-
+uint8_t Arduboy2Ext::pressedButtons() const
+{
   return currentButtonState;
-
 }
 
-void Arduboy2Ext::clearButtonState() {
-
+void Arduboy2Ext::clearButtonState()
+{
   currentButtonState = previousButtonState = 0;
-
 }
 
-struct BitStreamReader {
-
+struct BitStreamReader
+{
   const uint8_t *source;
   uint16_t sourceIndex;
   uint8_t bitBuffer;
   uint8_t byteBuffer;
 
+  BitStreamReader(const uint8_t *source) : source(source), sourceIndex(), bitBuffer(), byteBuffer() {}
 
-  BitStreamReader(const uint8_t *source) : source(source), sourceIndex(), bitBuffer(), byteBuffer() { }
-  
   uint16_t readBits(uint16_t bitCount)
   {
     uint16_t result = 0;
@@ -41,26 +37,22 @@ struct BitStreamReader {
         this->byteBuffer = pgm_read_byte(&this->source[this->sourceIndex]);
         ++this->sourceIndex;
       }
-      
+
       if ((this->byteBuffer & this->bitBuffer) != 0)
         result |= (1 << i); // result |= bitshift_left[i];
-        
+
       this->bitBuffer <<= 1;
     }
     return result;
   }
-  
 };
 
-
-void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t color, bool mirror) {
-
+void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t color, bool mirror)
+{
   // set up decompress state
-
   BitStreamReader cs = BitStreamReader(bitmap);
 
   // read header
-
   int width = (int)cs.readBits(8) + 1;
   int height = (int)cs.readBits(8) + 1;
   uint8_t spanColour = static_cast<uint8_t>(cs.readBits(1)); // starting colour
@@ -70,10 +62,10 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
     return;
 
   // sy = sy - (frame * height);
-
   int yOffset = abs(sy) % 8;
   int startRow = sy / 8;
-  if (sy < 0) {
+  if (sy < 0)
+  {
     startRow--;
     yOffset = 8 - yOffset;
   }
@@ -83,18 +75,20 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
 
   int rowOffset = 0; // +(frame*rows);
   int columnOffset = 0;
-  
-  if (mirror) {
+
+  if (mirror)
+  {
     columnOffset = width - 1;
   }
-  else {
+  else
+  {
     columnOffset = 0;
   }
 
   uint8_t byte = 0x00;
   uint8_t bit = 0x01;
-  while (rowOffset < rows) {// + (frame*rows))
-  
+  while (rowOffset < rows)
+  { // + (frame*rows))
     uint16_t bitLength = 1;
     while (cs.readBits(1) == 0)
       bitLength += 2;
@@ -102,8 +96,8 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
     uint16_t len = cs.readBits(bitLength) + 1; // span length
 
     // draw the span
-    for (uint16_t i = 0; i < len; ++i) {
-
+    for (uint16_t i = 0; i < len; ++i)
+    {
       if (spanColour != 0)
         byte |= bit;
       bit <<= 1;
@@ -114,36 +108,38 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
         int bRow = startRow + rowOffset;
 
         //if (byte) // possible optimisation
-        if ((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) && (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0)) {
+        if ((bRow <= (HEIGHT / 8) - 1) && (bRow > -2) && (columnOffset + sx <= (WIDTH - 1)) && (columnOffset + sx >= 0))
+        {
 
           int16_t offset = (bRow * WIDTH) + sx + columnOffset;
-          
-          if (bRow >= 0) {
+
+          if (bRow >= 0)
+          {
             int16_t index = offset;
             uint8_t value = byte << yOffset;
-            
+
             if (color != 0)
               sBuffer[index] |= value;
             else
               sBuffer[index] &= ~value;
           }
 
-          if ((yOffset != 0) && (bRow < (HEIGHT / 8) - 1)) {
+          if ((yOffset != 0) && (bRow < (HEIGHT / 8) - 1))
+          {
 
             int16_t index = offset + WIDTH;
             uint8_t value = byte >> (8 - yOffset);
-            
+
             if (color != 0)
               sBuffer[index] |= value;
             else
               sBuffer[index] &= ~value;
           }
-          
         }
 
-
         // iterate
-        if (!mirror) {
+        if (!mirror)
+        {
           ++columnOffset;
           if (columnOffset >= width)
           {
@@ -151,14 +147,15 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
             ++rowOffset;
           }
         }
-        else {
+        else
+        {
           --columnOffset;
-          if (columnOffset < 0) {
+          if (columnOffset < 0)
+          {
             columnOffset = width - 1;
             ++rowOffset;
           }
         }
-
 
         // reset byte
         byte = 0x00;
@@ -170,27 +167,20 @@ void Arduboy2Ext::drawCompressedMirror(int16_t sx, int16_t sy, const uint8_t *bi
   }
 }
 
-
-
-/* ----------------------------------------------------------------------------
- *  Draw a horizontal dotted line. 
- */
-void Arduboy2Ext::drawHorizontalDottedLine(uint8_t x1, uint8_t x2, uint8_t y) {
-
-  for (uint8_t x3 = x1; x3 <= x2; x3+=2) {
+// Draw a horizontal dotted line.
+void Arduboy2Ext::drawHorizontalDottedLine(uint8_t x1, uint8_t x2, uint8_t y)
+{
+  for (uint8_t x3 = x1; x3 <= x2; x3 += 2)
+  {
     drawPixel(x3, y, WHITE);
   }
-  
 }
 
-
-/* ----------------------------------------------------------------------------
- *  Draw a vertical dotted line. 
- */
-void Arduboy2Ext::drawVerticalDottedLine(uint8_t y1, uint8_t y2, uint8_t x) {
-
-  for (uint8_t y3 = y1; y3 <= y2; y3+=2) {
+// Draw a vertical dotted line.
+void Arduboy2Ext::drawVerticalDottedLine(uint8_t y1, uint8_t y2, uint8_t x)
+{
+  for (uint8_t y3 = y1; y3 <= y2; y3 += 2)
+  {
     drawPixel(x, y3, WHITE);
   }
-  
 }
